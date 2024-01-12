@@ -8,7 +8,7 @@
   <div class="btn k7" @click="append('7')">7</div>
   <div class="btn k8" @click="append('8')">8</div>
   <div class="btn k9" @click="append('9')">9</div>
-  <div class="btn k10 sdrow" @click="multiply">X</div>
+  <div class="btn k10 sdrow" @click="multiply">×</div>
   <div class="btn k11" @click="append('4')">4</div>
   <div class="btn k12" @click="append('5')">5</div>
   <div class="btn k13" @click="append('6')">6</div>
@@ -94,6 +94,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .calculator{
+  border-radius: 4px;
   width: 500px;
   height: 800px;
   position: absolute;
@@ -118,6 +119,10 @@ export default {
 .btn{
   background-color: bisque;
   border:1px solid #999;
+}
+.btn:hover{
+  background-color:darkorange;
+  color:rgb(255, 255, 255);
 }
 .sdrow{
   background-color: aquamarine;
