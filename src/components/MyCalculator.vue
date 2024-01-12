@@ -2,24 +2,24 @@
 <div class="calculator">
   <div class="k1">{{ result || '0'}}</div>
   <div class="btn k2" @click="clear">C</div>
-  <div class="btn k3 ">+/-</div>
+  <div class="btn k3 " @click="sign">+/-</div>
   <div class="btn k5" @click="percent">%</div>
-  <div class="btn k6 sdrow">÷</div>
+  <div class="btn k6 sdrow" @click="divide">÷</div>
   <div class="btn k7" @click="append('7')">7</div>
-  <div class="btn k8">8</div>
-  <div class="btn k9">9</div>
-  <div class="btn k10 sdrow">X</div>
-  <div class="btn k11">4</div>
-  <div class="btn k12">5</div>
-  <div class="btn k13">6</div>
-  <div class="btn k14 sdrow">-</div>
-  <div class="btn k15">1</div>
-  <div class="btn k16">2</div>
-  <div class="btn k17">3</div>
-  <div class="btn k18 sdrow">+</div>
-  <div class="btn zero">0</div>
-  <div class="btn k20">.</div>
-  <div class="btn k21 sdrow">=</div>
+  <div class="btn k8" @click="append('8')">8</div>
+  <div class="btn k9" @click="append('9')">9</div>
+  <div class="btn k10 sdrow" @click="multiply">X</div>
+  <div class="btn k11" @click="append('4')">4</div>
+  <div class="btn k12" @click="append('5')">5</div>
+  <div class="btn k13" @click="append('6')">6</div>
+  <div class="btn k14 sdrow" @click="subtract">-</div>
+  <div class="btn k15" @click="append('1')">1</div>
+  <div class="btn k16" @click="append('2')">2</div>
+  <div class="btn k17" @click="append('3')">3</div>
+  <div class="btn k18 sdrow" @click="addition">+</div>
+  <div class="btn zero" @click="append('0')">0</div>
+  <div class="btn k20" @click="decimal">.</div>
+  <div class="btn k21 sdrow" @click="equal">=</div>
   </div>
 </template>
 
@@ -28,7 +28,10 @@ export default {
   name: 'MyCalculator',
   data(){
     return{
-      result:'2987',
+      result:'',
+      prev:null,
+      operator:null,
+      operatorClicked:false,
     }
   },
   methods:{
@@ -39,10 +42,53 @@ export default {
       this.result=`${parseFloat(this.result)/100}`;
     },
     append(a){
+      if(this.operatorClicked){
+        this.result='';
+        this.operatorClicked=false;
+      }
       this.result+=a;
+    },
+    decimal(){
+      if(this.result.indexOf('.')==-1){
+        this.result+='.';
+      }
+    },
+      sign(){
+        if(this.result.indexOf('-')==-1){
+          this.prev=this.result;
+          this.result= '-'+this.result;
+        }
+        else{
+          this.result=this.prev;
+        }
+      },
+      addition(){
+        this.operator = (a,b) => a+b;
+        this.prev=this.result;
+        this.operatorClicked=true;
+      },
+      subtract(){
+        this.operator = (a,b) => a-b;
+        this.prev=this.result;
+      this.operatorClicked=true;
+      },
+      multiply(){
+        this.operator = (a,b) => a*b;
+        this.prev=this.result;
+        this.operatorClicked=true;      
+      },
+      divide(){
+        this.operator = (a,b) => a/b;
+        this.prev=this.result;
+        this.operatorClicked=true;      
+      },
+      equal(){
+        this.result=`${this.operator(parseFloat(this.prev),parseFloat(this.result))}`;
+      }
+
     }
   }
-}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
